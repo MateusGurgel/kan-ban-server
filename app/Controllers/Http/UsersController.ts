@@ -13,7 +13,7 @@ export default class UsersController {
 
       const user = await User.create({ email: payload.email, password: payload.password })
 
-      console.log(user.$isPersisted)
+      return response.created(user)
     } catch (error) {
       response.badRequest(error)
     }
