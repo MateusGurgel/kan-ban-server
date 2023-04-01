@@ -20,6 +20,11 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+Route.post('/users/', 'UsersController.store')
+Route.post('/auth/', 'UsersController.auth')
+
+Route.post('/kanban/', 'KanbansController.store')
+Route.post('/kanbans/', 'KanbansController.show')
+
+Route.post('/task/', 'KanbansController.store')
+Route.post('/tasks/', 'KanbansController.show')
