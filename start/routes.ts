@@ -21,7 +21,7 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.post('/users/', 'UsersController.store')
-Route.post('/auth/', 'UsersController.auth')
+Route.post('/login/', 'UsersController.login')
 
 Route.post('/kanban/', 'KanbansController.store')
 Route.post('/kanbans/', 'KanbansController.show')
