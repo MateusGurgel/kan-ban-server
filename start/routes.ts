@@ -23,8 +23,8 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.post('/users/', 'UsersController.store')
 Route.post('/login/', 'UsersController.login')
 
-Route.post('/kanban/', 'KanbansController.store')
-Route.post('/kanbans/', 'KanbansController.show')
+Route.post('/users/:user/kanban/', 'KanbansController.store').middleware('auth')
+Route.get('/users/:user/kanbans/', 'KanbansController.show').middleware('auth')
 
-Route.post('/task/', 'KanbansController.store')
-Route.post('/tasks/', 'KanbansController.show')
+Route.post('/users/:user/:kanban/task/', 'KanbansController.store').middleware('auth')
+Route.post('/users/:user/:kanban/tasks/', 'KanbansController.show').middleware('auth')
