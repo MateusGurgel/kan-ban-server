@@ -6,6 +6,9 @@ export default class Kanban extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public userId: number
+
   @column({})
   public name: string
 

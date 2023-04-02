@@ -1,11 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, HasOne, beforeSave, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, HasMany, beforeSave, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Kanban from './Kanban'
 import Hash from '@ioc:Adonis/Core/Hash'
 
 export default class User extends BaseModel {
-  @hasOne(() => Kanban)
-  public profile: HasOne<typeof Kanban>
+  @hasMany(() => Kanban)
+  public kanbans: HasMany<typeof Kanban>
 
   @column({ isPrimary: true })
   public id: number
