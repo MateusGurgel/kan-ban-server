@@ -11,7 +11,7 @@ export default class KanbansController {
 
     const kanbans = await user.related('kanbans').query()
 
-    return kanbans
+    return response.created(kanbans)
   }
 
   public async store({ request, response, auth }: HttpContextContract) {
