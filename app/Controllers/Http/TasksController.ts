@@ -15,20 +15,20 @@ export default class TasksController {
 
       return response.created(task)
     } catch (error) {
-      console.log(error)
       return response.badRequest(error)
     }
   }
 
-  public async show({ response, auth }: HttpContextContract) {
-    const user = auth.user
+  public async show({ response, auth, params }: HttpContextContract) {
+    try {
+      const kanbanId = params.kanban
+      const kanban = await Kanban.findOrFail(kanbanId)
 
-    if (!user) {
-      return response.unauthorized({ message: 'unauthorized' })
+      const tasks = await kanban.related('tasks').query()
+
+      return response.created(tasks)
+    } catch (error) {
+      return response.badRequest(error)
     }
-
-    const kanbans = await user.related('kanbans').query()
-
-    return response.created(kanbans)
   }
 }
