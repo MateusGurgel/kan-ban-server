@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { TaskField } from 'Contracts/enums'
 
 export default class Task extends BaseModel {
   @column({ isPrimary: true })
@@ -10,6 +11,12 @@ export default class Task extends BaseModel {
 
   @column({})
   public kanbanId: number
+
+  @column({})
+  public columnName: string
+
+  @column()
+  public field: TaskField
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
