@@ -3,7 +3,7 @@ import User from 'App/Models/User'
 import CreateKanbanValidator from 'App/Validators/CreateKanbanValidator'
 
 export default class KanbansController {
-  public async show({ response, params }: HttpContextContract) {
+  public async show({ response, params, bouncer }: HttpContextContract) {
     const userId = params.user
     const user = await User.find(userId)
 
@@ -11,18 +11,21 @@ export default class KanbansController {
       return response.notFound({ message: 'User not found' })
     }
 
-    const kanbans = await user.related('kanbans').query()
+    await bouncer.authorize('accessKanban', user)
 
+    const kanbans = await user.related('kanbans').query()
     return response.created(kanbans)
   }
 
-  public async store({ request, response, params }: HttpContextContract) {
+  public async store({ request, response, params, bouncer }: HttpContextContract) {
     const userId = params.user
     const user = await User.find(userId)
 
     if (!user) {
       return response.notFound({ message: 'User not found' })
     }
+
+    await bouncer.authorize('accessKanban', user)
 
     const payload = await request.validate(CreateKanbanValidator)
     const kanban = await user.related('kanbans').create({

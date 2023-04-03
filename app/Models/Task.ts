@@ -9,7 +9,7 @@ export default class Task extends BaseModel {
   public content: string
 
   @column({})
-  public kanbanId: string
+  public kanbanId: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
