@@ -19,16 +19,16 @@ export default class TasksController {
     }
   }
 
-  public async show({ response, auth, params }: HttpContextContract) {
-    try {
-      const kanbanId = params.kanban
-      const kanban = await Kanban.findOrFail(kanbanId)
+  public async show({ response, params }: HttpContextContract) {
+    const kanbanId = params.kanban
+    const kanban = await Kanban.find(kanbanId)
 
-      const tasks = await kanban.related('tasks').query()
-
-      return response.created(tasks)
-    } catch (error) {
-      return response.badRequest(error)
+    if (!kanban) {
+      return response.notFound({ message: 'kanban not found!' })
     }
+
+    const tasks = await kanban.related('tasks').query()
+
+    return response.created(tasks)
   }
 }

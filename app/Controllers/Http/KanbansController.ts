@@ -1,12 +1,14 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import User from 'App/Models/User'
 import CreateKanbanValidator from 'App/Validators/CreateKanbanValidator'
 
 export default class KanbansController {
-  public async show({ auth, response }: HttpContextContract) {
-    const user = auth.user
+  public async show({ response, params }: HttpContextContract) {
+    const userId = params.user
+    const user = await User.find(userId)
 
     if (!user) {
-      return response.unauthorized({ message: 'unauthorized' })
+      return response.notFound({ message: 'User not found' })
     }
 
     const kanbans = await user.related('kanbans').query()
@@ -14,22 +16,19 @@ export default class KanbansController {
     return response.created(kanbans)
   }
 
-  public async store({ request, response, auth }: HttpContextContract) {
-    try {
-      const user = auth.user
+  public async store({ request, response, params }: HttpContextContract) {
+    const userId = params.user
+    const user = await User.find(userId)
 
-      if (!user) {
-        return response.unauthorized({ message: 'unauthorized' })
-      }
-
-      const payload = await request.validate(CreateKanbanValidator)
-      const kanban = await user.related('kanbans').create({
-        name: payload.name,
-      })
-
-      return response.created(kanban)
-    } catch (error) {
-      return response.badRequest(error)
+    if (!user) {
+      return response.notFound({ message: 'User not found' })
     }
+
+    const payload = await request.validate(CreateKanbanValidator)
+    const kanban = await user.related('kanbans').create({
+      name: payload.name,
+    })
+
+    return response.created(kanban)
   }
 }
