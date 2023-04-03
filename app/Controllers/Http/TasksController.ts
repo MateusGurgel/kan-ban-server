@@ -4,19 +4,19 @@ import CreateTaskValidator from 'App/Validators/CreateTaskValidator'
 
 export default class TasksController {
   public async store({ response, request, params }: HttpContextContract) {
-    try {
-      const kanbanId = params.kanban
-      const kanban = await Kanban.findOrFail(kanbanId)
+    const kanbanId = params.kanban
+    const kanban = await Kanban.find(kanbanId)
 
-      const payload = await request.validate(CreateTaskValidator)
-      const task = await kanban.related('tasks').create({
-        content: payload.content,
-      })
-
-      return response.created(task)
-    } catch (error) {
-      return response.badRequest(error)
+    if (!kanban) {
+      return response.notFound({ message: 'kanban not found' })
     }
+
+    const payload = await request.validate(CreateTaskValidator)
+    const task = await kanban.related('tasks').create({
+      content: payload.content,
+    })
+
+    return response.created(task)
   }
 
   public async show({ response, params }: HttpContextContract) {
