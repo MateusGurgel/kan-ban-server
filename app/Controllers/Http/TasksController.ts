@@ -21,7 +21,7 @@ export default class TasksController {
     return response.created(task)
   }
 
-  public async show({ response, bouncer, params }: HttpContextContract) {
+  public async index({ response, bouncer, params }: HttpContextContract) {
     const kanbanId = params.kanban
     const kanban = await Kanban.find(kanbanId)
 

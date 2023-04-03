@@ -3,7 +3,7 @@ import User from 'App/Models/User'
 import CreateKanbanValidator from 'App/Validators/CreateKanbanValidator'
 
 export default class KanbansController {
-  public async show({ response, params, bouncer }: HttpContextContract) {
+  public async index({ response, params, bouncer }: HttpContextContract) {
     const userId = params.user
     const user = await User.find(userId)
 
