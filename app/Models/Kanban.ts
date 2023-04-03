@@ -19,5 +19,5 @@ export default class Kanban extends BaseModel {
   public updatedAt: DateTime
 
   @hasMany(() => Task)
-  public task: HasMany<typeof Task>
+  public tasks: HasMany<typeof Task>
 }

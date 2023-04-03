@@ -26,5 +26,5 @@ Route.post('/login/', 'UsersController.login')
 Route.post('/users/:user/kanban/', 'KanbansController.store').middleware('auth')
 Route.get('/users/:user/kanbans/', 'KanbansController.show').middleware('auth')
 
-Route.post('/users/:user/:kanban/task/', 'KanbansController.store').middleware('auth')
-Route.post('/users/:user/:kanban/tasks/', 'KanbansController.show').middleware('auth')
+Route.get('/users/:user/kanbans/:kanban/tasks/', 'TasksController.show').middleware('auth')
+Route.post('/users/:user/kanbans/:kanban/task/', 'TasksController.store').middleware('auth')

@@ -8,6 +8,9 @@ export default class Task extends BaseModel {
   @column()
   public content: string
 
+  @column({})
+  public kanbanId: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
