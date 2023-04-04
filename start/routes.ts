@@ -28,3 +28,4 @@ Route.post('/users/:user/kanban/', 'KanbansController.store').middleware('auth')
 
 Route.get('/kanbans/:kanban/tasks/', 'TasksController.index').middleware('auth')
 Route.post('/kanbans/:kanban/task/', 'TasksController.store').middleware('auth')
+Route.post('/kanbans/:kanban/tasks/:task', 'TasksController.update').middleware('auth')

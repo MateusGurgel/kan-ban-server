@@ -1,6 +1,8 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Kanban from 'App/Models/Kanban'
+import Task from 'App/Models/Task'
 import CreateTaskValidator from 'App/Validators/CreateTaskValidator'
+import EditTaskValidator from 'App/Validators/EditTaskValidator'
 
 export default class TasksController {
   public async store({ response, request, bouncer, params }: HttpContextContract) {
@@ -17,6 +19,29 @@ export default class TasksController {
     const task = await kanban.related('tasks').create({
       content: payload.content,
     })
+
+    return response.created(task)
+  }
+
+  public async update({ response, request, bouncer, params }: HttpContextContract) {
+    const kanbanId = params.kanban
+    const kanban = await Kanban.find(kanbanId)
+
+    if (!kanban) {
+      return response.notFound({ message: 'kanban not found' })
+    }
+
+    await bouncer.authorize('accessTask', kanban)
+
+    const taskID = params.task
+    const task = await Task.find(taskID)
+
+    if (!task) {
+      return response.notFound({ message: 'task not found' })
+    }
+
+    const payload = await request.validate(EditTaskValidator)
+    task.merge(payload).save()
 
     return response.created(task)
   }
