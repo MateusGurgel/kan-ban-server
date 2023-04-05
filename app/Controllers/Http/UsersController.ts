@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
+import ApiResponse from 'App/Services/ApiResponse'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
 import LoginValidator from 'App/Validators/LoginValidator'
 
@@ -11,7 +12,7 @@ export default class UsersController {
       const token = await auth.use('api').attempt(payload.email, payload.password)
       return response.ok(token)
     } catch {
-      return response.unauthorized({ message: 'Invalid Credentials' })
+      return ApiResponse.error(response, 401, [{ message: 'Invalid Credentials' }])
     }
   }
 

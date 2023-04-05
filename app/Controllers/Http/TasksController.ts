@@ -1,6 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Kanban from 'App/Models/Kanban'
 import Task from 'App/Models/Task'
+import ApiResponse from 'App/Services/ApiResponse'
 import CreateTaskValidator from 'App/Validators/CreateTaskValidator'
 import EditTaskValidator from 'App/Validators/EditTaskValidator'
 
@@ -10,7 +11,7 @@ export default class TasksController {
     const kanban = await Kanban.find(kanbanId)
 
     if (!kanban) {
-      return response.notFound({ message: 'kanban not found' })
+      return ApiResponse.error(response, 404, [{ message: 'kanban not found!' }])
     }
 
     await bouncer.authorize('accessTask', kanban)
@@ -28,7 +29,7 @@ export default class TasksController {
     const kanban = await Kanban.find(kanbanId)
 
     if (!kanban) {
-      return response.notFound({ message: 'kanban not found' })
+      return ApiResponse.error(response, 404, [{ message: 'kanban not found!' }])
     }
 
     await bouncer.authorize('accessTask', kanban)
@@ -37,7 +38,7 @@ export default class TasksController {
     const task = await Task.find(taskID)
 
     if (!task) {
-      return response.notFound({ message: 'task not found' })
+      return ApiResponse.error(response, 404, [{ message: 'task not found!' }])
     }
 
     const payload = await request.validate(EditTaskValidator)
@@ -51,7 +52,7 @@ export default class TasksController {
     const kanban = await Kanban.find(kanbanId)
 
     if (!kanban) {
-      return response.notFound({ message: 'kanban not found!' })
+      return ApiResponse.error(response, 404, [{ message: 'kanban not found!' }])
     }
 
     await bouncer.authorize('accessTask', kanban)

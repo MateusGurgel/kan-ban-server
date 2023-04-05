@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
+import ApiResponse from 'App/Services/ApiResponse'
 import CreateKanbanValidator from 'App/Validators/CreateKanbanValidator'
 
 export default class KanbansController {
@@ -8,7 +9,7 @@ export default class KanbansController {
     const user = await User.find(userId)
 
     if (!user) {
-      return response.notFound({ message: 'User not found' })
+      return ApiResponse.error(response, 404, [{ message: 'User not found!' }])
     }
 
     await bouncer.authorize('accessKanban', user)
@@ -22,7 +23,7 @@ export default class KanbansController {
     const user = await User.find(userId)
 
     if (!user) {
-      return response.notFound({ message: 'User not found' })
+      return ApiResponse.error(response, 404, [{ message: 'User not found!' }])
     }
 
     await bouncer.authorize('accessKanban', user)
