@@ -11,7 +11,7 @@ export default class CreateUserValidator {
 
   public messages: CustomMessages = {
     'email.unique': 'Email not available',
-    'confirm': 'The password and confirm password fields must match.',
+    'confirmed': 'The password and confirm password fields must match.',
     'required': 'The {{ field }} is required to create a new account',
     'minLength': 'The {{ field }} can be at least {{ options.minLength }} chars long',
     'maxLength': 'The {{ field }} can contain maximum of {{ options.maxLength }} chars long',
