@@ -16,12 +16,19 @@ export default class UsersController {
     }
   }
 
-  public async store({ request, response }: HttpContextContract) {
+  public async store({ request, response, auth }: HttpContextContract) {
     const payload = await request.validate(CreateUserValidator)
 
     try {
       const user = await User.create({ email: payload.email, password: payload.password })
-      return response.created(user)
+      const token = await auth.use('api').attempt(payload.email, payload.password)
+
+      const data = {
+        user: user,
+        token: token,
+      }
+
+      return response.created(data)
     } catch (error) {
       return response.badRequest(error)
     }
