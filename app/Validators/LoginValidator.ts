@@ -9,5 +9,10 @@ export default class LoginValidator {
     password: schema.string([rules.minLength(8), rules.maxLength(64)]),
   })
 
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    required: 'The {{ field }} is required to create a new account',
+    email: 'The {{ field }} field must be an valid email',
+    minLength: 'The {{ field }} can be at least {{ options.minLength }} chars long',
+    maxLength: 'The {{ field }} can contain maximum of {{ options.maxLength }} chars long',
+  }
 }
