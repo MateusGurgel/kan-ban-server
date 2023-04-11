@@ -16,6 +16,15 @@ export default class UsersController {
     }
   }
 
+  public async getId({ response, auth }: HttpContextContract) {
+    const user = auth.user
+
+    if (!user) {
+      return ApiResponse.error(response, 401, [{ message: 'Invalid User' }])
+    }
+
+    return response.ok({ id: user.id })
+  }
   public async store({ request, response, auth }: HttpContextContract) {
     const payload = await request.validate(CreateUserValidator)
 
