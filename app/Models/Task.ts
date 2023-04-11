@@ -9,6 +9,9 @@ export default class Task extends BaseModel {
   @column()
   public content: string
 
+  @column()
+  public index: number
+
   @column({})
   public kanbanId: number
 

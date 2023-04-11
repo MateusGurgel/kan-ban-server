@@ -5,6 +5,7 @@ export default class CreateTaskValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
+    index: schema.number(),
     content: schema.string([rules.maxLength(1000)]),
   })
 

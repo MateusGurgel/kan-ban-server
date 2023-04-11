@@ -6,6 +6,7 @@ export default class EditTaskValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
+    index: schema.number.optional(),
     content: schema.string.optional([rules.maxLength(1000)]),
     field: schema.enum.optional([TaskField.TODO, TaskField.IN_PROGRESS, TaskField.DONE]),
   })

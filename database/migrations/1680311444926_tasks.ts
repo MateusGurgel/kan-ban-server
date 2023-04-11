@@ -7,6 +7,7 @@ export default class extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
+      table.integer('index')
       table.text('content')
       table.enum('field', Object.values(TaskField)).defaultTo(TaskField.TODO).notNullable()
       table.string('column')
