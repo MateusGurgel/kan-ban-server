@@ -16,6 +16,13 @@ export default class UsersController {
     }
   }
 
+  public async logout({ auth }: HttpContextContract) {
+    await auth.use('api').revoke()
+    return {
+      revoked: true,
+    }
+  }
+
   public async getId({ response, auth }: HttpContextContract) {
     const user = auth.user
 
