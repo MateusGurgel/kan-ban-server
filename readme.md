@@ -9,8 +9,7 @@ The Kanban! project is a responsive web application that enables users to create
 
 ## Demo
 
-[PlaceHoder]
-
+![App Demo](https://github.com/MateusGurgel/kan-ban/blob/main/demo/Demo.gif)
 
 ## Screenshots
 
